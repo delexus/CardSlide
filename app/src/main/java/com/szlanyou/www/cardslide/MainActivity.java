@@ -1,7 +1,9 @@
 package com.szlanyou.www.cardslide;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,24 +21,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.id_recycler_view);
+        CardRecyclerView recyclerView = (CardRecyclerView) findViewById(R.id.id_recycler_view);
         StringAdapter adapter = new StringAdapter(this);
         CardLayoutManager llm = new CardLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(adapter);
     }
 
-
-
-    private void fillData(List<String> stringList) {
-
-    }
-
-
     private static class StringAdapter extends RecyclerView.Adapter {
 
         private LayoutInflater inflater;
+        private int ARRAY_COLORS[] = {Color.GREEN, Color.BLUE, Color.RED, Color.LTGRAY};
+        private Random random = new Random();
 
         StringAdapter(Context context) {
             inflater = LayoutInflater.from(context);
@@ -50,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.textView.setText("hello");
+            viewHolder.textView.setBackgroundColor(ARRAY_COLORS[random.nextInt(4)]);
         }
 
         @Override
